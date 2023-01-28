@@ -1,34 +1,52 @@
-import javax.swing.*;
+import java.util.Random;
+import java.util.Scanner;
 
-public class NumberGuessing {
-    public static void main(String[] args) {
-        int computeNumber = (int) (Math.random() * 100 + 1);
-        int userAnswer = 0;
-        int count = 1;
-        try {
-            while (userAnswer != computeNumber) {
-                String response = JOptionPane.showInputDialog(null, "Enter a guess between 1 and 100");
-                userAnswer = Integer.parseInt(response);
-                JOptionPane.showMessageDialog(null, " " + determineGuess(userAnswer, computeNumber, count));
-                count++;
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+class Game{
+    public int number;
+    public int inputNumber;
+    public int noOfGuesses = 0;
+
+    public int getNoOfGuesses() {
+        return noOfGuesses;
     }
 
-    public static String determineGuess(int userAnswer, int computeNumber, int count) {
-        if (userAnswer <= 0 || userAnswer > 100) {
-            return "Your guess is invalid";
-        } else if (userAnswer == computeNumber) {
-            return "Correct! \n Total Guesses : " + count;
-        } else if (userAnswer > computeNumber) {
-            return "Your guess is too high, try again, \n Try Number : " + count;
-        } else if (userAnswer < computeNumber) {
-            return "Your guess is too low, try again, \n Try Number :  " + count;
-        } else {
-            return "Your guess is incorrect \n Try Number : " + count;
+    public void setNoOfGuesses(int noOfGuesses) {
+        this.noOfGuesses = noOfGuesses;
+    }
 
+    Game(){
+        Random rand = new Random();
+        this.number = rand.nextInt(100);
+    }
+    void takeUserInput(){
+        System.out.println("Guess the number");
+        Scanner sc = new Scanner(System.in);
+        inputNumber = sc.nextInt();
+    }
+    boolean isCorrectNumber(){
+        noOfGuesses++;
+        if (inputNumber==number){
+            System.out.format("Yes you guessed it right, it was %d\nYou guessed it in %d attempts", number, noOfGuesses);
+            return true;
+        }
+        else if(inputNumber<number){
+            System.out.println("Too low...");
+        }
+        else if(inputNumber>number){
+            System.out.println("Too high...");
+        }
+        return false;
+    }
+
+}
+public class NumberGuessing {
+    public static void main(String[] args) {
+
+        Game g = new Game();
+        boolean b = false;
+        while (!b) {
+            g.takeUserInput();
+            b = g.isCorrectNumber();
         }
     }
 }
