@@ -186,7 +186,7 @@ private void showMenu() {
 
 public class ATMinterface {
     public static void main(String[] args) {
-        BankAccount ba=new BankAccount("RANDHIR" , "6202");
+        BankAccount ba=new BankAccount("RANDHIR" , "9508");
         ba.checkId();
 
 }
